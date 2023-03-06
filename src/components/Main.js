@@ -1,18 +1,31 @@
+import { useEffect, useState } from 'react';
 import tempAvatar from '../img/avatar.png';
+import { api } from '../utils/api';
+import Card from './Card';
 
 function Main(props) {
 
-  // const handleEditAvatarClick = () => {
-  //   document.querySelector('#editAvatarPopup').classList.add('popup_opened');
-  // }
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
 
-  // const handleEditProfileClick = () => {
-  //   document.querySelector('#profileEditPopup').classList.add('popup_opened');
-  // }
+  const [cards, setCards] = useState([]);
 
-  // const handleAddPlaceClick = () => {
-  //   document.querySelector('#newPlacePopup').classList.add('popup_opened');
-  // }
+  useEffect(() => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(responses => {
+        const [userData, initialCardsData] = responses;
+
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+
+        setCards(initialCardsData);
+      })
+      .catch(err => console.log(err));
+  },[]);
+
+  //console.log(cards);
 
   return (
     <main className="content">
@@ -25,19 +38,19 @@ function Main(props) {
               type="button"
               aria-label="Изменить аватар"
               onClick={props.onEditAvatar}>
-              <img src={tempAvatar} alt=" Аватар пользователя." className="profile__avatar" />
+              <img src={userAvatar ? userAvatar : tempAvatar} alt=" Аватар пользователя." className="profile__avatar" />
             </button>
           </div>
           <div className="profile__info">
             <div className="profile__title">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
+              <h1 className="profile__name">{userName}</h1>
               <button
                 className="profile__edit"
                 type="button"
                 aria-label="Редактировать профиль"
                 onClick={props.onEditProfile}></button>
             </div>
-            <p className="profile__about">Исследователь океана</p>
+            <p className="profile__about">{userDescription}</p>
           </div>
         </div>
         <button
@@ -49,6 +62,7 @@ function Main(props) {
       {/* <!-- Elements --> */}
       <section className="elements">
         <ul className="elements__cards">
+          {cards.map(card => <Card card={card}  key={card._id} onCardClick={props.onCardClick} />)}
         </ul>
       </section>
     </main>

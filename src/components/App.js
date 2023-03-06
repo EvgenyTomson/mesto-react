@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
+import ImagePopup from "./ImagePopup";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 
@@ -10,6 +11,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -30,13 +33,24 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+
+    setSelectedCard(null);
+  }
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
   }
 
   return (
     <div className="body">
       <Header />
 
-      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} />
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
+      />
 
       <Footer />
 
@@ -79,6 +93,9 @@ function App() {
             <span className="popup__error avatarLink-error"></span>
           </label></>
         } />
+
+      {/* Попап показа изображения из карточки */}
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
       {/* <!-- Popup Edit Profile --> */}
       {/* <div className="popup" id="profileEditPopup">
