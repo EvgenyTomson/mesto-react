@@ -3,7 +3,7 @@ import tempAvatar from '../img/avatar.png';
 import { api } from '../utils/api';
 import Card from './Card';
 
-function Main(props) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
@@ -35,7 +35,7 @@ function Main(props) {
               className="profile__avatar-button"
               type="button"
               aria-label="Изменить аватар"
-              onClick={props.onEditAvatar}>
+              onClick={onEditAvatar}>
               <img src={userAvatar ? userAvatar : tempAvatar} alt=" Аватар пользователя." className="profile__avatar" />
             </button>
           </div>
@@ -46,7 +46,7 @@ function Main(props) {
                 className="profile__edit"
                 type="button"
                 aria-label="Редактировать профиль"
-                onClick={props.onEditProfile}></button>
+                onClick={onEditProfile}></button>
             </div>
             <p className="profile__about">{userDescription}</p>
           </div>
@@ -55,12 +55,12 @@ function Main(props) {
           className="profile__add-place"
           type="button"
           aria-label="Добавить место"
-          onClick={props.onAddPlace}></button>
+          onClick={onAddPlace}></button>
       </section>
       {/* <!-- Elements --> */}
       <section className="elements">
         <ul className="elements__cards">
-          {cards.map(card => <Card card={card}  key={card._id} onCardClick={props.onCardClick} />)}
+          {cards.map(card => <Card card={card}  key={card._id} onCardClick={onCardClick} />)}
         </ul>
       </section>
     </main>
