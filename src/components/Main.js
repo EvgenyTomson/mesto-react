@@ -25,8 +25,6 @@ function Main(props) {
       .catch(err => console.log(err));
   },[]);
 
-  //console.log(cards);
-
   return (
     <main className="content">
       {/* <!-- Profile --> */}
