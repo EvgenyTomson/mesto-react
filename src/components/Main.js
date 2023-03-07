@@ -22,7 +22,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
 
         setCards(initialCardsData);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   },[]);
 
   return (
@@ -46,7 +46,8 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
                 className="profile__edit"
                 type="button"
                 aria-label="Редактировать профиль"
-                onClick={onEditProfile}></button>
+                onClick={onEditProfile}
+              />
             </div>
             <p className="profile__about">{userDescription}</p>
           </div>
@@ -55,7 +56,8 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
           className="profile__add-place"
           type="button"
           aria-label="Добавить место"
-          onClick={onAddPlace}></button>
+          onClick={onAddPlace}
+        />
       </section>
       {/* <!-- Elements --> */}
       <section className="elements">
