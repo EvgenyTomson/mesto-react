@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
@@ -14,16 +14,27 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState(null);
 
+  const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false); //временно
+
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
+
+  // это временно
+  setIsAnyPopupOpen(true);
   }
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
+
+  // это временно
+  setIsAnyPopupOpen(true);
   }
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
+
+  // это временно
+  setIsAnyPopupOpen(true);
   }
 
   const closeAllPopups = () => {
@@ -32,11 +43,30 @@ function App() {
     setIsEditAvatarPopupOpen(false);
 
     setSelectedCard(null);
+
+  // это временно
+  setIsAnyPopupOpen(false);
   }
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
   }
+
+// это все временно
+  useEffect(() => {
+
+    const handleKeydown = (evt) => {
+      (evt.key === 'Escape') && closeAllPopups();
+    };
+
+    if (isAnyPopupOpen || selectedCard) {
+      document.addEventListener('keydown', handleKeydown);
+
+      return () => {
+        document.removeEventListener('keydown', handleKeydown);
+      }
+    }
+  }, [isAnyPopupOpen, selectedCard])
 
   return (
     <div className="body">
