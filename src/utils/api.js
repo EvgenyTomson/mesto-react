@@ -75,7 +75,7 @@ class Api {
   }
 
   // Постановка и снятие лайка:
-  addLike(cardId) {
+  _addLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: this._headers,
@@ -85,7 +85,7 @@ class Api {
         })
   }
 
-  removeLike(cardId) {
+  _removeLike(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: this._headers,
@@ -93,6 +93,10 @@ class Api {
         .then(res => {
           return this._checkResponseStatus(res, 'removeLike')
         })
+  }
+
+  toggleCardLikeStatus(cardId, isLiked) {
+    return isLiked ? this._removeLike(cardId) : this._addLike(cardId)
   }
 
   // Обновление аватара пользователя:
