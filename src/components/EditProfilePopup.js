@@ -32,7 +32,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   return (
     <PopupWithForm
@@ -43,18 +43,16 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
       onSubmit={handleSubmit}
       buttonText='Сохранить'
     >
-      <>
-        <label htmlFor="inputName" className="popup__field">
-          <input type="text" className="popup__input" id="inputName" name="name" required autoComplete="off"
-            placeholder="Имя" minLength="2" maxLength="40" onChange={handleNameOnChange} value={name} />
-          <span className="popup__error inputName-error" />
-        </label>
-        <label htmlFor="inputJob" className="popup__field">
-          <input type="text" className="popup__input" id="inputJob" name="about" required autoComplete="off"
-            placeholder="Вид деятельности" minLength="2" maxLength="200" onChange={handleAboutOnChange} value={description} />
-          <span className="popup__error inputJob-error" />
-        </label>
-      </>
+      <label htmlFor="inputName" className="popup__field">
+        <input type="text" className="popup__input" id="inputName" name="name" required autoComplete="off"
+          placeholder="Имя" minLength="2" maxLength="40" onChange={handleNameOnChange} value={name} />
+        <span className="popup__error inputName-error" />
+      </label>
+      <label htmlFor="inputJob" className="popup__field">
+        <input type="text" className="popup__input" id="inputJob" name="about" required autoComplete="off"
+          placeholder="Вид деятельности" minLength="2" maxLength="200" onChange={handleAboutOnChange} value={description} />
+        <span className="popup__error inputJob-error" />
+      </label>
     </PopupWithForm>
   )
 }

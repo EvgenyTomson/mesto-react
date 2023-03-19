@@ -32,18 +32,16 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
       onSubmit={handleSubmit}
       buttonText='Сохранить'
     >
-      <>
-        <label htmlFor="placeName" className="popup__field">
-          <input type="text" className="popup__input" id="placeName" name="name" required autoComplete="off"
-            placeholder="Название" minLength="2" maxLength="30" onChange={handleNameOnChange} value={name} />
-          <span className="popup__error placeName-error" />
-        </label>
-        <label htmlFor="placeLink" className="popup__field">
-          <input type="url" className="popup__input" id="placeLink" name="link" required autoComplete="off"
-            placeholder="Ссылка на картинку" onChange={handleLinkOnChange} value={link} />
-          <span className="popup__error placeLink-error" />
-        </label>
-      </>
+      <label htmlFor="placeName" className="popup__field">
+        <input type="text" className="popup__input" id="placeName" name="name" required autoComplete="off"
+          placeholder="Название" minLength="2" maxLength="30" onChange={handleNameOnChange} value={name} />
+        <span className="popup__error placeName-error" />
+      </label>
+      <label htmlFor="placeLink" className="popup__field">
+        <input type="url" className="popup__input" id="placeLink" name="link" required autoComplete="off"
+          placeholder="Ссылка на картинку" onChange={handleLinkOnChange} value={link} />
+        <span className="popup__error placeLink-error" />
+      </label>
     </PopupWithForm>
   )
 }
