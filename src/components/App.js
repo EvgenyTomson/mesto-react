@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CurrentUserContext, initialUserData } from "../contexts/CurrentUserContext";
-import { api } from "../utils/api";
+import api from "../utils/api";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteOwnCardPopup from "./DeleteOwnCardPopup";
 import EditAvatarPopup from "./EditAvatarPopup";
