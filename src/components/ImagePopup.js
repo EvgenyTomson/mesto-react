@@ -2,7 +2,7 @@ function ImagePopup({card, onClose}) {
 
   const handleOnClick = (evt) => {
     const className = evt.target.className;
-    if(className.includes('popup') || className.includes('popup__close')) {
+    if(className.includes('popup_opened') || className.includes('popup__close')) {
       onClose();
     }
   }

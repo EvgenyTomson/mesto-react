@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CurrentUserContext, initialUserData } from "../contexts/CurrentUserContext";
 import { api } from "../utils/api";
 import AddPlacePopup from "./AddPlacePopup";
+import DeleteOwnCardPopup from "./DeleteOwnCardPopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import Footer from "./Footer";
@@ -12,6 +13,9 @@ import Main from "./Main";
 
 
 function App() {
+
+  const [cardToDelete, setCardToDelete] = useState(null);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   const [currentUser, setCurrentUser] = useState(initialUserData);
   const [cards, setCards] = useState([]);
@@ -55,6 +59,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+
+    setIsDeletePopupOpen(false);
 
     setSelectedCard(null);
 
@@ -126,6 +132,7 @@ function App() {
         // Формируем новый массив на основе имеющегося, исключая из него удаляемую карточку
         const newCards = cards.filter(c => c._id !== card._id);
         setCards(newCards);
+        closeAllPopups();
       })
       .catch(error => {
         console.error(error);
@@ -143,6 +150,13 @@ function App() {
       })
   };
 
+  // попап удаления карточки:
+  const openDeletePopup = (card) => {
+    setCardToDelete(card);
+    setIsDeletePopupOpen(true);
+    setIsAnyPopupOpen(true);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
@@ -155,19 +169,39 @@ function App() {
           onCardClick={handleCardClick}
           cards={cards}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={openDeletePopup}
         />
 
         <Footer />
 
         {/* Попап редактирования профиля */}
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
         {/* Попап добавления нового места */}
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         {/* Попап изменения аватара */}
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
+
+        {/* Попап подтверждения удаления карточки: */}
+        <DeleteOwnCardPopup
+          isOpen={isDeletePopupOpen}
+          onClose={closeAllPopups}
+          onCardDelete={handleCardDelete}
+          cardToDelete={cardToDelete}
+        />
 
         {/* Попап показа изображения из карточки */}
         <ImagePopup
