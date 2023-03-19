@@ -9,22 +9,19 @@ import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
 import Main from "./Main";
-// import PopupWithForm from "./PopupWithForm";
 
 
 function App() {
-
-  const [cardToDelete, setCardToDelete] = useState(null);
-  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
-
   const [currentUser, setCurrentUser] = useState(initialUserData);
+
   const [cards, setCards] = useState([]);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState(null);
-
+  const [cardToDelete, setCardToDelete] = useState(null);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   // Состояние, определяющее, открыт ли какой-либо попап. Используется для эффекта закрытия по Esc:
   const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
 
@@ -39,19 +36,16 @@ function App() {
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-
     setIsAnyPopupOpen(true);
   }
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
-
     setIsAnyPopupOpen(true);
   }
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
-
     setIsAnyPopupOpen(true);
   }
 
@@ -59,23 +53,18 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-
     setIsDeletePopupOpen(false);
-
     setSelectedCard(null);
-
     setIsAnyPopupOpen(false);
   }
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
-
     setIsAnyPopupOpen(true);
   }
 
 // Закрытие попапов по Esc:
   useEffect(() => {
-
     const handleKeydown = (evt) => {
       (evt.key === 'Escape') && closeAllPopups();
     };

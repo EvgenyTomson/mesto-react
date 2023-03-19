@@ -5,7 +5,7 @@ function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete}) {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    // Передаём значения управляемых компонентов во внешний обработчик
+    // Передаём удаляемую карточку во внешний обработчик
     onCardDelete(cardToDelete);
   }
 
