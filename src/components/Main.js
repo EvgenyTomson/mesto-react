@@ -1,47 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 // import tempAvatar from '../img/avatar.png';
-import { api } from '../utils/api';
+// import { api } from '../utils/api';
 import Card from './Card';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) {
 
   const currentUser = useContext(CurrentUserContext);
-  const [cards, setCards] = useState([]);
-
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
-
-    api.toggleCardLikeStatus(card._id, isLiked)
-      .then((updatedCard) => {
-        // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
-        const newCards = cards.map(c => c._id === card._id ? updatedCard : c);
-        setCards(newCards);
-      })
-      .catch(error => {
-        console.error(error);
-      })
-  };
-
-  const handleCardDelete = (card) => {
-    api.deleteCard(card._id)
-      .then(() => {
-        // Формируем новый массив на основе имеющегося, исключая из него удаляемую карточку
-        const newCards = cards.filter(c => c._id !== card._id);
-        setCards(newCards);
-      })
-      .catch(error => {
-        console.error(error);
-      })
-  };
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then(initialCardsData => {
-        setCards(initialCardsData);
-      })
-      .catch(err => console.error(err));
-  },[]);
 
   return (
     <main className="content">
@@ -89,8 +54,10 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
               card={card}
               key={card._id}
               onCardClick={onCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              // onCardLike={handleCardLike}
+              onCardLike={onCardLike}
+              // onCardDelete={handleCardDelete}
+              onCardDelete={onCardDelete}
               />
           ))}
         </ul>
