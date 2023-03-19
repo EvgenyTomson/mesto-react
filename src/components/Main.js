@@ -1,7 +1,5 @@
 import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-// import tempAvatar from '../img/avatar.png';
-// import { api } from '../utils/api';
 import Card from './Card';
 
 function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) {
@@ -20,7 +18,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
               aria-label="Изменить аватар"
               onClick={onEditAvatar}>
               <img
-                // src={currentUser ? currentUser.avatar : tempAvatar}
                 src={currentUser.avatar}
                 alt=" Аватар пользователя."
                 className="profile__avatar" />
@@ -28,7 +25,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
           </div>
           <div className="profile__info">
             <div className="profile__title">
-              <h1 className="profile__name">{currentUser ? currentUser.name: ''}</h1>
+              <h1 className="profile__name">{currentUser.name}</h1>
               <button
                 className="profile__edit"
                 type="button"
@@ -36,7 +33,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
                 onClick={onEditProfile}
               />
             </div>
-            <p className="profile__about">{currentUser ? currentUser.about: ''}</p>
+            <p className="profile__about">{currentUser.about}</p>
           </div>
         </div>
         <button
@@ -54,9 +51,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
               card={card}
               key={card._id}
               onCardClick={onCardClick}
-              // onCardLike={handleCardLike}
               onCardLike={onCardLike}
-              // onCardDelete={handleCardDelete}
               onCardDelete={onCardDelete}
               />
           ))}

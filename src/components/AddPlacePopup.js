@@ -19,6 +19,8 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
     // Передаём значения управляемых компонентов во внешний обработчик
     onAddPlace({name, link});
+    setName('');
+    setLink('');
   }
 
   return (

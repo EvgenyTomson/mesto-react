@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useEffect, useState } from "react";
+import { CurrentUserContext, initialUserData } from "../contexts/CurrentUserContext";
 import { api } from "../utils/api";
 import AddPlacePopup from "./AddPlacePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -13,20 +13,22 @@ import Main from "./Main";
 
 function App() {
 
-  const [currentUser, setCurrentUser] = useState(useContext(CurrentUserContext));//useState(initialUserData);
+  const [currentUser, setCurrentUser] = useState(initialUserData);
+  const [cards, setCards] = useState([]);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
-  // const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false); //временно
+  // Состояние, определяющее, открыт ли какой-либо попап. Используется для эффекта закрытия по Esc:
+  const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
 
   useEffect(() => {
-    api.getUserData()
-      .then(userData => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, initialCardsData]) => {
         setCurrentUser(userData);
+        setCards(initialCardsData);
       })
       .catch(err => console.error(err));
   },[]);
@@ -34,21 +36,18 @@ function App() {
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
 
-    // это временно
     setIsAnyPopupOpen(true);
   }
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
 
-    // это временно
     setIsAnyPopupOpen(true);
   }
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
 
-    // это временно
     setIsAnyPopupOpen(true);
   }
 
@@ -59,13 +58,12 @@ function App() {
 
     setSelectedCard(null);
 
-    // это временно
     setIsAnyPopupOpen(false);
   }
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
-    // это временно
+
     setIsAnyPopupOpen(true);
   }
 
@@ -108,8 +106,6 @@ function App() {
   };
 
   // Карточки:
-  const [cards, setCards] = useState([]);
-
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
 
@@ -137,8 +133,6 @@ function App() {
   };
 
   const handleAddPlaceSubmit = (cardData) => {
-    console.log(cardData);
-
     api.addNewCard(cardData)
       .then(updatedCardData => {
         setCards([updatedCardData, ...cards]);
@@ -148,14 +142,6 @@ function App() {
         console.error(error);
       })
   };
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then(initialCardsData => {
-        setCards(initialCardsData);
-      })
-      .catch(err => console.error(err));
-  },[]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
