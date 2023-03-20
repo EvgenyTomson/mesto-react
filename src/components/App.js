@@ -78,7 +78,10 @@ function App() {
     }
   }, [isAnyPopupOpen]);
 
+  const [isProfileLoading, setIsProfileLoading] = useState(false);
+
   const handleUpdateUser = (userData) => {
+    setIsProfileLoading(true);
     api.editUserData(userData)
       .then(updatedUserData => {
         setCurrentUser(updatedUserData);
@@ -87,9 +90,15 @@ function App() {
       .catch(error => {
         console.error(error);
       })
+      .finally(() => {
+        setIsProfileLoading(false);
+      })
   };
 
+  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+
   const handleUpdateAvatar = (avatarUrl) => {
+    setIsAvatarLoading(true);
     api.editUserAvatar(avatarUrl)
       .then(updatedUserData => {
         setCurrentUser(updatedUserData);
@@ -97,6 +106,9 @@ function App() {
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
+        setIsAvatarLoading(false);
       })
   };
 
@@ -115,7 +127,10 @@ function App() {
       })
   };
 
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+
   const handleCardDelete = (card) => {
+    setIsDeleteLoading(true);
     api.deleteCard(card._id)
       .then(() => {
         // Формируем новый массив на основе имеющегося, исключая из него удаляемую карточку
@@ -126,9 +141,15 @@ function App() {
       .catch(error => {
         console.error(error);
       })
+      .finally(() => {
+        setIsDeleteLoading(false);
+      })
   };
 
+  const [isNewCardLoading, setIsNewCardLoading] = useState(false);
+
   const handleAddPlaceSubmit = (cardData) => {
+    setIsNewCardLoading(true);
     api.addNewCard(cardData)
       .then(updatedCardData => {
         setCards([updatedCardData, ...cards]);
@@ -136,6 +157,9 @@ function App() {
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
+        setIsNewCardLoading(false);
       })
   };
 
@@ -168,6 +192,7 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoading={isProfileLoading}
         />
 
         {/* Попап добавления нового места */}
@@ -175,6 +200,7 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          isLoading={isNewCardLoading}
         />
 
         {/* Попап изменения аватара */}
@@ -182,6 +208,7 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isAvatarLoading}
         />
 
         {/* Попап подтверждения удаления карточки: */}
@@ -190,6 +217,7 @@ function App() {
           onClose={closeAllPopups}
           onCardDelete={handleCardDelete}
           cardToDelete={cardToDelete}
+          isLoading={isDeleteLoading}
         />
 
         {/* Попап показа изображения из карточки */}

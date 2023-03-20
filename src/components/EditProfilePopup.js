@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
+function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoading}) {
 
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState('');
@@ -41,7 +41,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText='Сохранить'
+      buttonText={isLoading ? 'Сохранение...' : 'Сохранить'}
     >
       <label htmlFor="inputName" className="popup__field">
         <input type="text" className="popup__input" id="inputName" name="name" required autoComplete="off"

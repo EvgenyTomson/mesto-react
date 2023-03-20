@@ -1,6 +1,6 @@
 import PopupWithForm from "./PopupWithForm";
 
-function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete}) {
+function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete, isLoading}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -16,7 +16,7 @@ function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete}) {
     isOpen={isOpen}
     onClose={onClose}
     onSubmit={handleSubmit}
-    buttonText='Да'
+    buttonText={isLoading ? 'Удаление...' : 'Да'}
     />
   )
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({isOpen, onClose, onAddPlace}) {
+function AddPlacePopup({isOpen, onClose, onAddPlace, isLoading}) {
 
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -30,7 +30,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText='Сохранить'
+      buttonText={isLoading ? 'Сохранение...' : 'Сохранить'}
     >
       <label htmlFor="placeName" className="popup__field">
         <input type="text" className="popup__input" id="placeName" name="name" required autoComplete="off"

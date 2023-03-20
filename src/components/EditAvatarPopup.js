@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
 
   const avatar = useRef();
 
@@ -19,7 +19,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      buttonText='Сохранить'
+      buttonText={isLoading ? 'Схранение...' : 'Сохранить'}
     >
       <label htmlFor="avatarLink" className="popup__field">
         <input ref={avatar} type="url" className="popup__input" id="avatarLink" name="avatar" required autoComplete="off"
