@@ -17,6 +17,7 @@ function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete, isLoad
     onClose={onClose}
     onSubmit={handleSubmit}
     buttonText={isLoading ? 'Удаление...' : 'Да'}
+    isValid={true}
     />
   )
 }

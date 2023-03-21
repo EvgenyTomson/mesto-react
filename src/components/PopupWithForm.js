@@ -1,4 +1,6 @@
-function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, children}) {
+import { useEffect } from "react";
+
+function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, isValid, children}) {
 
   const handleOnClick = (evt) => {
     const className = evt.target.className;
@@ -6,6 +8,20 @@ function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, chil
       onClose();
     }
   }
+
+  useEffect(() => {
+    const handleKeydown = (evt) => {
+      (evt.key === 'Escape') && onClose();
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeydown);
+
+      return () => {
+        document.removeEventListener('keydown', handleKeydown);
+      }
+    }
+  }, [isOpen, onClose]);
 
   return (
     <div
@@ -21,7 +37,7 @@ function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, chil
           />
           <h2 className="popup__title">{title}</h2>
           {children}
-          <button className="popup__submit" type="submit">{buttonText}</button>
+          <button className={isValid ? "popup__submit": "popup__submit popup__submit_disabled"} type="submit" disabled={!isValid}>{buttonText}</button>
         </form>
       </div>
     </div>

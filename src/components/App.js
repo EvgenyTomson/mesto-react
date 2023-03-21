@@ -23,7 +23,7 @@ function App() {
   const [cardToDelete, setCardToDelete] = useState(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   // Состояние, определяющее, открыт ли какой-либо попап. Используется для эффекта закрытия по Esc:
-  const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
+  // const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -36,17 +36,17 @@ function App() {
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-    setIsAnyPopupOpen(true);
+    //setIsAnyPopupOpen(true);
   }
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
-    setIsAnyPopupOpen(true);
+    //setIsAnyPopupOpen(true);
   }
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
-    setIsAnyPopupOpen(true);
+   // setIsAnyPopupOpen(true);
   }
 
   const closeAllPopups = () => {
@@ -55,28 +55,28 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsDeletePopupOpen(false);
     setSelectedCard(null);
-    setIsAnyPopupOpen(false);
+    //setIsAnyPopupOpen(false);
   }
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
-    setIsAnyPopupOpen(true);
+    //setIsAnyPopupOpen(true);
   }
 
 // Закрытие попапов по Esc:
-  useEffect(() => {
-    const handleKeydown = (evt) => {
-      (evt.key === 'Escape') && closeAllPopups();
-    };
+  // useEffect(() => {
+  //   const handleKeydown = (evt) => {
+  //     (evt.key === 'Escape') && closeAllPopups();
+  //   };
 
-    if (isAnyPopupOpen) {
-      document.addEventListener('keydown', handleKeydown);
+  //   if (isAnyPopupOpen) {
+  //     document.addEventListener('keydown', handleKeydown);
 
-      return () => {
-        document.removeEventListener('keydown', handleKeydown);
-      }
-    }
-  }, [isAnyPopupOpen]);
+  //     return () => {
+  //       document.removeEventListener('keydown', handleKeydown);
+  //     }
+  //   }
+  // }, [isAnyPopupOpen]);
 
   const [isProfileLoading, setIsProfileLoading] = useState(false);
 
@@ -167,7 +167,7 @@ function App() {
   const openDeletePopup = (card) => {
     setCardToDelete(card);
     setIsDeletePopupOpen(true);
-    setIsAnyPopupOpen(true);
+    //setIsAnyPopupOpen(true);
   }
 
   return (

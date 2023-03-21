@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 function ImagePopup({card, onClose}) {
 
   const handleOnClick = (evt) => {
@@ -6,6 +8,20 @@ function ImagePopup({card, onClose}) {
       onClose();
     }
   }
+
+  useEffect(() => {
+    const handleKeydown = (evt) => {
+      (evt.key === 'Escape') && onClose();
+    };
+
+    if (card) {
+      document.addEventListener('keydown', handleKeydown);
+
+      return () => {
+        document.removeEventListener('keydown', handleKeydown);
+      }
+    }
+  }, [card, onClose]);
 
   return (
     <div
