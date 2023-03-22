@@ -1,17 +1,20 @@
 import { useRef, useState } from "react";
-import { validateInput } from "../utils/ulils";
+import { defaultInputClassName } from "../utils/constants";
+import { resetInputValidation, validateInput } from "../utils/ulils";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
 
   const avatar = useRef();
 
+  const defaultValidationData = {status: false, message: '', className: defaultInputClassName};
+
   const [link, setLink] = useState('');
-  const [isLinkValid, setIsLinkValid] = useState({status: true, message: ''});
+  const [isLinkValid, setIsLinkValid] = useState(defaultValidationData);
 
   const onFormClose = () => {
-    setIsLinkValid({status: true, message: ''});
-    setLink('');
+    resetInputValidation(setLink, setIsLinkValid, defaultValidationData);
+
     onClose();
   }
 
@@ -26,7 +29,8 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
 
     onUpdateAvatar(avatar.current.value);
     avatar.current.value = '';
-    setLink('');
+
+    resetInputValidation(setLink, setIsLinkValid, defaultValidationData);
   }
 
   return (
@@ -40,7 +44,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
       isValid={isLinkValid.status}
     >
       <label htmlFor="avatarLink" className="popup__field">
-        <input ref={avatar} type="url" className="popup__input" id="avatarLink" name="avatar" required autoComplete="off"
+        <input ref={avatar} type="url" className={isLinkValid.className} id="avatarLink" name="avatar" required autoComplete="off"
           placeholder="Ссылка на аватар" onChange={handleLinkOnChange} value={link} />
         <span className="popup__error avatarLink-error" >{isLinkValid.message}</span>
       </label>

@@ -12,7 +12,7 @@ function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete, isLoad
   return (
     <PopupWithForm
     name='profileEditPopup'
-    title='Редактировать профиль'
+    title='Вы уверены?'
     isOpen={isOpen}
     onClose={onClose}
     onSubmit={handleSubmit}
