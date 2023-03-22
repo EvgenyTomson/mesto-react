@@ -1,6 +1,6 @@
 import { useEscapeClosePopup } from "../hooks/useEscapeClosePopup";
 
-function ImagePopup({card, onClose}) {
+function ImagePopup({card, onClose, isOpen, onTansitionEnd}) {
 
   const handleOnClick = (evt) => {
     const className = evt.target.className;
@@ -9,12 +9,15 @@ function ImagePopup({card, onClose}) {
     }
   }
 
-  useEscapeClosePopup([card, onClose]);
+  useEscapeClosePopup([isOpen, onClose]);
 
   return (
     <div
-      className={card ? "popup popup_type_big popup_opened" : "popup popup_type_big"} id="viewImagePopup"
+      className={isOpen ? "popup popup_type_big popup_opened" : "popup popup_type_big"} id="viewImagePopup"
       onClick={handleOnClick}
+      onTransitionEnd={(evt) => {
+        if ( !isOpen && evt.target === evt.currentTarget && evt.propertyName === 'opacity' ) onTansitionEnd();
+      }}
     >
       <div className="popup__container popup__container_type_big">
           <button

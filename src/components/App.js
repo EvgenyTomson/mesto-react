@@ -19,11 +19,11 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+
   const [selectedCard, setSelectedCard] = useState(null);
   const [cardToDelete, setCardToDelete] = useState(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
-  // Состояние, определяющее, открыт ли какой-либо попап. Используется для эффекта закрытия по Esc:
-  // const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
 
   useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -36,17 +36,15 @@ function App() {
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-    //setIsAnyPopupOpen(true);
+
   }
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
-    //setIsAnyPopupOpen(true);
   }
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
-   // setIsAnyPopupOpen(true);
   }
 
   const closeAllPopups = () => {
@@ -54,29 +52,9 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsDeletePopupOpen(false);
-    setSelectedCard(null);
-    //setIsAnyPopupOpen(false);
+    //setSelectedCard(null);
+    setIsImagePopupOpen(false);
   }
-
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-    //setIsAnyPopupOpen(true);
-  }
-
-// Закрытие попапов по Esc:
-  // useEffect(() => {
-  //   const handleKeydown = (evt) => {
-  //     (evt.key === 'Escape') && closeAllPopups();
-  //   };
-
-  //   if (isAnyPopupOpen) {
-  //     document.addEventListener('keydown', handleKeydown);
-
-  //     return () => {
-  //       document.removeEventListener('keydown', handleKeydown);
-  //     }
-  //   }
-  // }, [isAnyPopupOpen]);
 
   const [isProfileLoading, setIsProfileLoading] = useState(false);
 
@@ -113,6 +91,15 @@ function App() {
   };
 
   // Карточки:
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
+  }
+
+  const handleOnTransitionEnd = () => {
+    setSelectedCard(null);
+  }
+
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
 
@@ -167,7 +154,6 @@ function App() {
   const openDeletePopup = (card) => {
     setCardToDelete(card);
     setIsDeletePopupOpen(true);
-    //setIsAnyPopupOpen(true);
   }
 
   return (
@@ -224,6 +210,8 @@ function App() {
         <ImagePopup
           card={selectedCard}
           onClose={closeAllPopups}
+          isOpen={isImagePopupOpen}
+          onTansitionEnd={handleOnTransitionEnd}
         />
       </div>
     </CurrentUserContext.Provider>
