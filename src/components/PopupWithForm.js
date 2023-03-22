@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEscapeClosePopup } from "../hooks/useEscapeClosePopup";
 
 function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, isValid, children}) {
 
@@ -9,19 +9,7 @@ function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, isVa
     }
   }
 
-  useEffect(() => {
-    const handleKeydown = (evt) => {
-      (evt.key === 'Escape') && onClose();
-    };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeydown);
-
-      return () => {
-        document.removeEventListener('keydown', handleKeydown);
-      }
-    }
-  }, [isOpen, onClose]);
+  useEscapeClosePopup([isOpen, onClose]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEscapeClosePopup } from "../hooks/useEscapeClosePopup";
 
 function ImagePopup({card, onClose}) {
 
@@ -9,19 +9,7 @@ function ImagePopup({card, onClose}) {
     }
   }
 
-  useEffect(() => {
-    const handleKeydown = (evt) => {
-      (evt.key === 'Escape') && onClose();
-    };
-
-    if (card) {
-      document.addEventListener('keydown', handleKeydown);
-
-      return () => {
-        document.removeEventListener('keydown', handleKeydown);
-      }
-    }
-  }, [card, onClose]);
+  useEscapeClosePopup([card, onClose]);
 
   return (
     <div
