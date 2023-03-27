@@ -8,11 +8,13 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, isLoading}) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
+  // При открытии формы кнопка задизейблена, т.к. инпуты пусты, но ошибки нет, пока пользователь не трогал инпуты
   const defaultValidationData = {status: false, message: '', className: defaultInputClassName};
 
   const [isNameValid, setIsNameValid] = useState(defaultValidationData);
   const [isLinkValid, setIsLinkValid] = useState(defaultValidationData);
 
+  // Переопределяем функцию закрытия попапа, чтобы перед закрытием сбросить ошибки валидации
   const onFormClose = () => {
     resetInputValidation(setName, setIsNameValid, defaultValidationData);
     resetInputValidation(setLink, setIsLinkValid, defaultValidationData);

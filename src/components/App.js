@@ -26,6 +26,7 @@ function App() {
   const [cardToDelete, setCardToDelete] = useState(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
+  // Показываем лоадер во время загрузки первоначальных данных с сервера:
   const [isLoaderOpen, setIsLoaderOpen] = useState(false);
 
   useEffect(() => {

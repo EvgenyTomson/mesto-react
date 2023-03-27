@@ -5,13 +5,16 @@ import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
 
+  // используем реф из-за требования брифа
   const avatar = useRef();
 
+   // При открытии формы кнопка задизейблена, т.к. инпуты пусты, но ошибки нет, пока пользователь не трогал инпуты
   const defaultValidationData = {status: false, message: '', className: defaultInputClassName};
 
   const [link, setLink] = useState('');
   const [isLinkValid, setIsLinkValid] = useState(defaultValidationData);
 
+  // Переопределяем функцию закрытия попапа, чтобы перед закрытием сбросить ошибки валидации
   const onFormClose = () => {
     resetInputValidation(setLink, setIsLinkValid, defaultValidationData);
 

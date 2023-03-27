@@ -10,11 +10,13 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoading}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+   // При открытии формы кнопка активна, т.к. в инпутах есть значения, взятые из контекста текущего пользователя
   const defaultValidationData = {status: true, message: '', className: defaultInputClassName};
 
   const [isNameValid, setIsNameValid] = useState(defaultValidationData);
   const [isDescriptionValid, setIsDescriptionValid] = useState(defaultValidationData);
 
+  // Переопределяем функцию закрытия попапа, чтобы перед закрытием сбросить ошибки валидации
   const onFormClose = () => {
     resetInputValidation(setName, setIsNameValid, defaultValidationData);
     resetInputValidation(setDescription, setIsDescriptionValid, defaultValidationData);
@@ -42,9 +44,6 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isLoading}) {
       name,
       about: description,
     });
-
-    // resetInputValidation(setName, setIsNameValid, defaultValidationData);
-    // resetInputValidation(setDescription, setIsDescriptionValid, defaultValidationData);
   }
 
   useEffect(() => {
