@@ -18,6 +18,8 @@ function DeleteOwnCardPopup({isOpen, onClose, onCardDelete, cardToDelete, isLoad
     onSubmit={handleSubmit}
     buttonText={isLoading ? 'Удаление...' : 'Да'}
     isValid={true}
+    // дополнительный класс для заголовка попапа, т.к. в макете другой отступ у данного попапа
+    extraTitleClass="popup__title_type_delete"
     />
   )
 }

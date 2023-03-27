@@ -1,6 +1,6 @@
 import { useEscapeClosePopup } from "../hooks/useEscapeClosePopup";
 
-function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, isValid, children}) {
+function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, isValid, children, extraTitleClass}) {
 
   const handleOnClick = (evt) => {
     const className = evt.target.className;
@@ -23,7 +23,7 @@ function PopupWithForm({isOpen, onClose, onSubmit, name, title, buttonText, isVa
             type="button"
             aria-label="Закрыть окно редактирования"
           />
-          <h2 className="popup__title">{title}</h2>
+          <h2 className={`popup__title ${extraTitleClass ? extraTitleClass : ""}`}>{title}</h2>
           {children}
           <button className={isValid ? "popup__submit": "popup__submit popup__submit_disabled"} type="submit" disabled={!isValid}>{buttonText}</button>
         </form>

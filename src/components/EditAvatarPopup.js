@@ -8,7 +8,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, isLoading}) {
   // используем реф из-за требования брифа
   const avatar = useRef();
 
-   // При открытии формы кнопка задизейблена, т.к. инпуты пусты, но ошибки нет, пока пользователь не трогал инпуты
+   // При открытии формы кнопка задизейблена, т.к. инпут пуст, но ошибки нет, пока пользователь не трогал инпут
   const defaultValidationData = {status: false, message: '', className: defaultInputClassName};
 
   const [link, setLink] = useState('');
