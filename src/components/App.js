@@ -8,6 +8,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
+import LoaderPopup from "./LoaderPopup";
 import Main from "./Main";
 
 
@@ -25,13 +26,19 @@ function App() {
   const [cardToDelete, setCardToDelete] = useState(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
+  const [isLoaderOpen, setIsLoaderOpen] = useState(false);
+
   useEffect(() => {
+    setIsLoaderOpen(true);
     Promise.all([api.getUserData(), api.getInitialCards()])
       .then(([userData, initialCardsData]) => {
         setCurrentUser(userData);
         setCards(initialCardsData);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
+      .finally(() => {
+        setIsLoaderOpen(false);
+      })
   },[]);
 
   const handleEditAvatarClick = () => {
@@ -212,6 +219,11 @@ function App() {
           onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
           onTansitionEnd={handleOnTransitionEnd}
+        />
+
+        {/* Попап индикатора загрузки */}
+        <LoaderPopup
+          isOpen={isLoaderOpen}
         />
       </div>
     </CurrentUserContext.Provider>
