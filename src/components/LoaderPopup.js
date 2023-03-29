@@ -3,7 +3,7 @@ function LoaderPopup ({isOpen}) {
     <div
       className={isOpen ? "popup popup_type_loader popup_opened" : "popup popup_type_loader"}
     >
-        <div class="popup__loader"><div></div><div></div><div></div><div></div>
+        <div className="popup__loader"><div></div><div></div><div></div><div></div>
         </div>
     </div>
   )
